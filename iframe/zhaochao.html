@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{background: red; margin:0; padding: 0;}
+		.commonBtn{width: 100%;margin: auto;height: 23px;background: #fff;}
+	</style>
+</head>
+<body>
+	<div style="width: 100%;background: red" id="box">
+		<div class='commonBtn'>
+			<button id='time'>活动时间</button>
+			<button id="prize">活动奖品</button>
+			<button id="detail">活动详情</button>
+			<button id="conversation">全部话题</button>
+			<button id="rank">获奖公示</button>
+		</div>
+		<div style="width: 100%;background: yellow;height: 200px" class='timeh'>活动时间区域</div>
+		<div style="width: 100%;background: blue;height: 200px;color:#fff" class="prizeh">活动奖品区域</div>
+		<div style="width: 100%;">
+			<div style="width: 100%;background: pink;height: 100px" class='detail1'>征集阶段</div>
+			<div style="width: 100%;background: red;height: 100px" class='detail2'>入围阶段</div>
+			<div style="width: 100%;background: #ff4400;height: 100px" class='detail3'>评选阶段</div>
+			<div class='last'></div>
+		</div>
+		<!--  最新活动区分
+				<button id="btn">click</button>
+				<button id='red'>点击瞬移-red</button>
+				
+				
+				<div style="width: 100%;background: green;height: 300px"></div> -->
+		<!-- <a href="" name="a" style="height: 300px;background: green;display: inline-block; width: 100%;margin-bottom: 1px">1</a> -->
+	</div>
+	<script src="jquery-2.2.0.js"></script>
+	<script src="md5.js"></script>
+	<script src="sign.js"></script>
+	<script src="base_pc.js"></script>
+	<!-- <script src="public.js"></script> -->
+	<script>
+		var newHd=new PcCommon();
+		var actStage=newHd.GetQueryString('actStage');//获取iframe地址栏参数实例
+		var actId=newHd.GetQueryString('actId');//获取活动ID
+		newHd.baseUrl = 'http://192.168.0.13:7500/';
+		newHd.rankUrl = 'http://localhost:8081/#/rank?actId='+actId;
+	//跳活动时间
+	$('#time').on('click',function(){
+		newHd.goTop('timeh')
+	})
+	//跳礼品
+	$('#prize').on('click',function(){
+		newHd.goTop('prizeh')
+	})
+	//跳详情
+	$('#detail').on('click',function(){
+		var id='detail'+actStage
+			newHd.goTop(id)
+	})
+	//跳全部话题
+	$('#conversation').on('click',function(){
+		if(actStage==1){
+			alert('暂未开始敬请期待')
+		}else{
+			newHd.goTop('last')
+		}
+	})
+	//跳获奖公示
+	$('#rank').on('click',function(){
+		if(actStage!=3){
+			alert('暂未开始敬请期待')
+		}else{
+			window.parent.location.href=newHd.rankUrl;
+		}
+	})
+	//跳全部话题
+	
+		//console.log(GetQueryString('id'))
+		// console.log(window.parent.document.URL)//获取地址栏url
+		// var box=document.querySelector('#box')
+		// var h=box.clientHeight
+		//$('#btn').on('click',function(){
+			//console.log(window.parent.document.URL)
+			// window.location.hash="#a";     //锚点
+			//window.parent.location.href='http://localhost:8888/#/newAct?zc=8888';   //跳转路由
+			// $('html,body').animate({scrollTop: '10px'}, 800);  //scrollTop滚动
+			// 调用分装好的POST请求
+			/*ajaxPost(
+				'/account/v1/userSubject/queryUserSubject',
+				{
+					activityId:141898831263432704,
+					page:0,
+					size:100000
+				},
+				function(res){
+					console.log(res)
+				}
+			)*/
+			
+		//})
+		// console.log(window.parent)
+		// console.log(signParam())
+		/*$('#red').on('click',function(){
+			$('html,body', window.parent.document).animate({scrollTop: '648px'}, 800)
+		})*/
+	</script>
+</body>
+</html>
