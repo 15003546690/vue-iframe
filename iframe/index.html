@@ -33,17 +33,31 @@
 				<div style="width: 100%;background: green;height: 300px"></div> -->
 		<!-- <a href="" name="a" style="height: 300px;background: green;display: inline-block; width: 100%;margin-bottom: 1px">1</a> -->
 	</div>
-	<script src="jquery-2.2.0.js"></script>
-	<script src="md5.js"></script>
-	<script src="sign.js"></script>
-	<script src="base_pc.js"></script>
+	<script src="../../../public/js/jquery-3.2.1.min.js"></script>
+	<script src="../../../public/js/md5.js"></script>
+	<script src="../../../public/js/sign.js"></script>
+	<script src="../../../public/js/base_pc.js"></script>
 	<!-- <script src="public.js"></script> -->
 	<script>
-		var newHd=new PcCommon();
-		var actStage=newHd.GetQueryString('actStage');//获取iframe地址栏参数实例
-		var actId=newHd.GetQueryString('actId');//获取活动ID
-		newHd.baseUrl = 'http://192.168.0.13:7500/';
-		newHd.rankUrl = 'http://localhost:8081/#/rank?actId='+actId;
+	$(document).ready(function(e) { 
+        var counter = 0;
+        if (window.history && window.history.pushState) {
+             $(window).on('popstate', function () {
+                        window.history.pushState('forward', null, '#');
+                        window.history.forward(1);
+                        window.parent.location.hash='/newActivity'
+                });
+          }
+
+          window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
+          window.history.forward(1);
+	});
+	var newHd=new PcCommon();
+	var actStage=newHd.GetQueryString('actStage');//获取iframe地址栏参数实例
+	var actId=newHd.GetQueryString('actId');//获取活动ID
+	newHd.baseUrl = 'http://192.168.0.13:7500/';
+	// newHd.rankUrl = 'http://localhost:8081/#/rank?actId='+actId;//本地
+	newHd.rankUrl = 'http://192.168.0.13/#/rank?actId='+actId;//13
 	//跳活动时间
 	$('#time').on('click',function(){
 		newHd.goTop('timeh')
